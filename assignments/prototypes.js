@@ -38,9 +38,7 @@
   * Instances of Humanoid should have all of the same properties as CharacterStats and GameObject.
   * Instances of CharacterStats should have all of the same properties as GameObject.
 */
-let func1 = function(param1) {
-  return param1
-}
+
 
 // Build next constructor 
 function GameObject(attributes){
@@ -59,6 +57,7 @@ function CharacterStats(attributes){
   this.name = attributes.name; 
   GameObject.call(this, attributes); 
 }
+
 // Inheritance
 CharacterStats.prototype = Object.create(GameObject.prototype); 
 
@@ -100,7 +99,7 @@ const witch = new Humanoid({
     'Wand of Wanda'
   ],
   language: 'English',
-  Health: 100
+  currentHealth: 100
 });
 
 
@@ -120,7 +119,7 @@ const magicCat = new Humanoid({
     'Is in the form of a black cat'
   ],
   language: 'English',
-  Health: 100
+  currentHealth: 100
 });
 
 const boyFriend = new Humanoid({
@@ -138,52 +137,54 @@ const boyFriend = new Humanoid({
     'Wittiness'
   ],
   language: 'English',
-  Health: 100
+  currentHealth: 100
 });
 // new constructor 
 function Villian(attributes){
   Humanoid.call(this,attributes); 
+  console.log(this);
   this.blackHair = attributes.blackHair;
   this.severeHalitosis = attributes.severeHalitosis;
   this.uglyStare = attributes.uglyStare;
-  this.Health = attributes.Health;
-}
+  this.currentHealth = attributes.currentHealth;    
+};  
 //inherit
 Villian.prototype = Object.create(Humanoid.prototype); 
 
 //methods 
 Villian.prototype.evilKackle = function () {
-  this.Health -=10;
-  return `The villian ${this.name} lets out an shrill kackle and says you will fail because I am ${this.name}`;
+ return `The villian ${this.name} lets out an shrill kackle and says you will fail because I am ${this.name}`;
 }
+
 
 function Hero (attributes){
   this.blondeHair = attributes.blondeHair;
   this.greenEyes = attributes.greenEyes;
   this.smarts = attributes.smaRts;
-  this.Health = attributes.Health;
+  this.currentHealth = attributes.currentHealth;
 
   Humanoid.call(this, attributes);
 }
 
+
 Hero.prototype = Object.create(Humanoid.prototype);  
 
 Hero.prototype.studyMagic = function () {
-  this.Health -=20  
+  this.Health -= 20;
   return `The hero ${this.name} studies her spellbook and finds a spell to defeat the villian.`; 
 }
 
 Hero.prototype.scoldsNeice = function () {
-  this.Health -=50; 
-  return `The hero ${this.name} scolds her neice ${witch.name} because she has to rescue her.`
+   this.currentHealth -= 50;
+   return `The hero ${this.name} scolds her neice ${witch.name} because she has to rescue her.`
 }
 Hero.prototype.flawlessVictory = function() {
-  this.Health -=30; 
-  return `The hero uses the newly discovered spell using her weapons ${this.weapons}... and defeats the villian`; 
+    this.currentHealth -= 30;
+    return `The hero uses the newly discovered spell using her weapons ${this.weapons}... and defeats the villian`; 
 }
 Hero.prototype.reassuresNeice = function () {
-  this.Health -=50; 
-  return `The hero ${this.name} reassures her neice ${witch.name} letting her know that she will save her.`
+    this.currentHealth -= 50;
+    return `The hero ${this.name} reassures her neice ${witch.name} letting her know that she will save her.`
 }
 
 
@@ -202,7 +203,7 @@ const auntZelda = new Hero({
   ],
   language: 'English',
   Hero: 'High',
-  Health: 100
+  currentHealth: 100
 });
 
 villian = new Villian({
@@ -220,7 +221,7 @@ villian = new Villian({
   ],
   language: 'British',
   severeHalitosis: 'Extremely Nasty',
-  Health: 100
+  currentHealth: 100
 });
 
 
@@ -244,14 +245,14 @@ console.log(`The villian has the following extra attribute ${villian.severeHalit
 console.log(`The villian speaks the following language ${villian.language}`);
 console.log(`The hero speaks the following language ${witch.language}`);
 console.log(villian.evilKackle());
-console.log(`${witch.name} has been reduced, ${witch.name} now has ${villian.Health}`);
+console.log(`${witch.name} has been reduced, ${witch.name} now has ${villian.currentHealth}`);
 console.log(auntZelda.studyMagic());
-console.log(`${villian.name} has been reduced, ${villian.name} now has ${villian.Health}`);
+console.log(`${villian.name} has been reduced, ${villian.name} now has ${villian.currentHealth}`);
 console.log(auntZelda.scoldsNeice());
-console.log(`${villian.name} has been reduced, ${villian.name} now has ${villian.Health}`) ;
+console.log(`${villian.name} has been reduced, ${villian.name} now has ${villian.currentHealth}`) ;
 console.log(auntZelda.flawlessVictory()); 
-console.log(`${villian.name} has been reduced, ${villian.name} now has ${villian.Health}`);
-console.log(`${auntZelda.name} WINS THE FIGHT AND SAVES ${witch.name}'s BOYFRIEND SO THEY CAN GO TO SCHOOL TOMORROW!`); 
+console.log(`${villian.name} has been reduced, ${villian.name} now has ${villian.currentHealth}`);
+console.log(`${auntZelda.name} WINS THE FIGHT AND SAVES ${witch.name} AND HER BOYFRIEND SO THEY CAN GO TO SCHOOL TOMORROW!`); 
 
 // Stretch task: 
 // * Create Villian and Hero constructor functions that inherit from the Humanoid constructor function.  
@@ -273,7 +274,7 @@ const auntHilda = new Hero({
   ],
   language: 'English',
   Hero: 'High',
-  Health: 100
+  currentHealth: 100
 });
 const womanVillian = new Villian({
   createdAt: new Date(),
@@ -290,7 +291,7 @@ const womanVillian = new Villian({
   ],
   language: 'English',
   uglyStare: 'Ugly Twisted',
-  Health: 100,
+  currentHealth: 100,
 });
 console.log("A new battle is about to begin")
 console.log(`The match ${witch.name} vs ${womanVillian.name} has begun.`);
@@ -306,5 +307,5 @@ console.log(`${womanVillian.name} has been reduced, ${womanVillian.name} now has
 console.log(auntHilda.reassuresNeice());
 console.log(`${womanVillian.name} has been reduced, ${womanVillian.name} now has ${womanVillian.Health}`) ;
 console.log(auntHilda.flawlessVictory()); 
-console.log(`${womanVillian.name} has been reduced, ${womanVillian.Health} now has ${womanVillian.Health}`);
-console.log(`${auntHilda.name} WINS THE FIGHT AND SAVES ${witch.name}'s BOYFRIEND SO THEY CAN GO TO SCHOOL TOMORROW!`); 
+console.log(`${womanVillian.name} has been reduced, ${womanVillian.name} now has ${womanVillian.Health}`);
+console.log(`${auntHilda.name} WINS THE FIGHT AND SAVES ${witch.name} AND HER BOYFRIEND SO THEY CAN GO TO SCHOOL TOMORROW!`); 
