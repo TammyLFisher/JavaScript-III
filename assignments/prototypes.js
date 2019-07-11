@@ -39,25 +39,22 @@
   * Instances of CharacterStats should have all of the same properties as GameObject.
 */
 
-
 // Build next constructor 
-function GameObject(attributes){
-  this.createdAt = attributes.createdAt;
-  this.dimensions = attributes.dimensions;
+function GameObject(gameObejectAttributes){
+  this.createdAt = gameObejectAttributes.createdAt;
+  this.dimensions = gameObejectAttributes.dimensions;
 }
 //methods for this ^ constructor 
 GameObject.prototype.destroy = function () {
   return `${this.name} was removed from the game`; 
 }
-
  
 //Build next constructor 
-function CharacterStats(attributes){
-  this.hp = attributes.hp;
-  this.name = attributes.name; 
-  GameObject.call(this, attributes); 
+function CharacterStats(characterStatsAttribute){
+  this.hp = characterStatsAttribute.hp;
+  this.name = characterStatsAttribute.name; 
+  GameObject.call(this, characterStatsAttribute); 
 }
-
 // Inheritance
 CharacterStats.prototype = Object.create(GameObject.prototype); 
 
@@ -66,246 +63,182 @@ CharacterStats.prototype.takeDamage = function () {
   return `${this.name} took damage`; 
 } 
 
-//Test you work by uncommenting these 3 objects and the list of console logs below:
-
-function Humanoid(attributes){  
-  this.faction = attributes.faction; 
-  this.weapons = attributes.weapons; 
-  this.language = attributes.language; 
-  CharacterStats.call(this,attributes);
+function Humanoid(humanoidAttributes){  
+  this.faction = humanoidAttributes.faction; 
+  this.weapons = humanoidAttributes.weapons; 
+  this.language = humanoidAttributes.language; 
+  CharacterStats.call(this,humanoidAttributes);
 }
 
-Humanoid.prototype = Object.create(CharacterStats.prototype); 
 //Humanoid methods under here. 
-//greet() // prototype method -> returns the string '<object name> offers a greeting in <object language>.'
-//^^ building above. 
+Humanoid.prototype = Object.create(CharacterStats.prototype); 
+
+
 Humanoid.prototype.greet = function() {
   return `${this.name} offers a greeting in ${this.language}`; 
 }
+//greet() // prototype method -> returns the string '<object name> offers a greeting in <object language>.'
+//^^ building above. 
 
-const witch = new Humanoid({
+//Test you work by uncommenting these 3 objects and the list of console logs below:
+
+const mage = new Humanoid({
   createdAt: new Date(),
   dimensions: {
     length: 2,
-    width: 2,
-    height: 6,
+    width: 1,
+    height: 1,
   },
-  hp: 12,
-  name: 'Sabrina',
-  faction: 'New York',
+  hp: 5,
+  name: 'Bruce',
+  faction: 'Mage Guild',
   weapons: [
-    'Teenage Witch',
-    'Nose Twitch',
-    'Wand of Wanda'
+    'Staff of Shamalama',
   ],
-  language: 'English',
-  currentHealth: 100
+  language: 'Common Tongue',
 });
 
 
-const magicCat = new Humanoid({
+const swordsman = new Humanoid({
   createdAt: new Date(),
   dimensions: {
-    length: 6,
+    length: 2,
     width: 2,
     height: 2,
   },
-  hp: 18,
-  name: 'Salem',
-  faction: 'New York',
+  hp: 15,
+  name: 'Sir Mustachio',
+  faction: 'The Round Table',
   weapons: [
-    'Nose Twitch',
-    'Tail Gestures',
-    'Is in the form of a black cat'
+    'Giant Sword',
+    'Shield',
   ],
-  language: 'English',
-  currentHealth: 100
+  language: 'Common Toungue',
 });
 
-const boyFriend = new Humanoid({
+const archer = new Humanoid({
   createdAt: new Date(),
   dimensions: {
-    length: 2,
+    length: 1,
     width: 2,
-    height: 10,
+    height: 4,
   },
-  hp: 8,
-  name: 'Josh',
-  faction: 'New York',
+  hp: 10,
+  name: 'Lilith',
+  faction: 'Forest Kingdom',
   weapons: [
-    'Intelligence',
-    'Wittiness'
+    'Bow',
+    'Dagger',
   ],
-  language: 'English',
-  currentHealth: 100
-});
-// new constructor 
-function Villian(attributes){
-  Humanoid.call(this,attributes); 
-  console.log(this);
-  this.blackHair = attributes.blackHair;
-  this.severeHalitosis = attributes.severeHalitosis;
-  this.uglyStare = attributes.uglyStare;
-  this.currentHealth = attributes.currentHealth;    
-};  
-//inherit
-Villian.prototype = Object.create(Humanoid.prototype); 
-
-//methods 
-Villian.prototype.evilKackle = function () {
- return `The villian ${this.name} lets out an shrill kackle and says you will fail because I am ${this.name}`;
-}
-
-
-function Hero (attributes){
-  this.blondeHair = attributes.blondeHair;
-  this.greenEyes = attributes.greenEyes;
-  this.smarts = attributes.smaRts;
-  this.currentHealth = attributes.currentHealth;
-
-  Humanoid.call(this, attributes);
-}
-
-
-Hero.prototype = Object.create(Humanoid.prototype);  
-
-Hero.prototype.studyMagic = function () {
-  this.Health -= 20;
-  return `The hero ${this.name} studies her spellbook and finds a spell to defeat the villian.`; 
-}
-
-Hero.prototype.scoldsNeice = function () {
-   this.currentHealth -= 50;
-   return `The hero ${this.name} scolds her neice ${witch.name} because she has to rescue her.`
-}
-Hero.prototype.flawlessVictory = function() {
-    this.currentHealth -= 30;
-    return `The hero uses the newly discovered spell using her weapons ${this.weapons}... and defeats the villian`; 
-}
-Hero.prototype.reassuresNeice = function () {
-    this.currentHealth -= 50;
-    return `The hero ${this.name} reassures her neice ${witch.name} letting her know that she will save her.`
-}
-
-
-const auntZelda = new Hero({
-  createdAt: new Date(),
-  dimensions: {
-    length: 2,
-    width: 2,
-    height: 10,
-  },
-  hp: 25,
-  name: 'Aunt Zelda',
-  faction: 'New York',
-  weapons: [
-    'Nose Twitch', 'Wand of her Mother', 'teaches Sabrina', 'supporter of Sabrina', 'Tries to do what is best for Sabrina', 'tries to keep Sabrina from using magic' 
-  ],
-  language: 'English',
-  Hero: 'High',
-  currentHealth: 100
+  language: 'Elvish',
 });
 
-villian = new Villian({
-  createdAt: new Date(),
-  dimensions: {
-    length: 2,
-    width: 2,
-    height: 8,
-  },
-  hp: 20,
-  name: 'Willard',
-  faction: 'Land of Magic',
-  weapons: [
-    'doubt','low confidence', 'unintelligent', 
-  ],
-  language: 'British',
-  severeHalitosis: 'Extremely Nasty',
-  currentHealth: 100
-});
+console.log(mage.createdAt); // Today's date
+console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
+console.log(swordsman.hp); // 15
+console.log(mage.name); // Bruce
+console.log(swordsman.faction); // The Round Table
+console.log(mage.weapons); // Staff of Shamalama
+console.log(archer.language); // Elvish
+console.log(archer.greet()); // Lilith offers a greeting in Elvish.
+console.log(mage.takeDamage()); // Bruce took damage.
+console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
 
 
-console.log(witch.createdAt); 
-console.log(magicCat.dimensions); 
-console.log(boyFriend.hp); 
-console.log(witch.name); 
-console.log(boyFriend.faction);
-console.log(witch.weapons); 
-console.log(magicCat.language); 
-console.log(magicCat.greet()); 
-console.log(witch.takeDamage()); 
-console.log(boyFriend.destroy()); 
-
-
-console.log("A new battle is about to begin")
-console.log(`The match ${witch.name} vs ${villian.name} has begun.`);
-console.log(`The villian has the following weapons ${villian.weapons}`);
-console.log(`The hero has the following weapons ${witch.weapons}`); 
-console.log(`The villian has the following extra attribute ${villian.severeHalitosis} breath`); 
-console.log(`The villian speaks the following language ${villian.language}`);
-console.log(`The hero speaks the following language ${witch.language}`);
-console.log(villian.evilKackle());
-console.log(`${witch.name} has been reduced, ${witch.name} now has ${villian.currentHealth}`);
-console.log(auntZelda.studyMagic());
-console.log(`${villian.name} has been reduced, ${villian.name} now has ${villian.currentHealth}`);
-console.log(auntZelda.scoldsNeice());
-console.log(`${villian.name} has been reduced, ${villian.name} now has ${villian.currentHealth}`) ;
-console.log(auntZelda.flawlessVictory()); 
-console.log(`${villian.name} has been reduced, ${villian.name} now has ${villian.currentHealth}`);
-console.log(`${auntZelda.name} WINS THE FIGHT AND SAVES ${witch.name} AND HER BOYFRIEND SO THEY CAN GO TO SCHOOL TOMORROW!`); 
 
 // Stretch task: 
 // * Create Villian and Hero constructor functions that inherit from the Humanoid constructor function.  
 // * Give the Hero and Villians different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
-// * Create two new objects, one a villian and one a hero and fight it out with methods!
+// * Create two new objects, one a villian and one a hero and fight it out with methods! 
 
-const auntHilda = new Hero({
+// new constructor 
+function Villian(villianAttributes){
+  Humanoid.call(this, villianAttributes); 
+  this.uglyStare = villianAttributes.uglyStare;
+  this.health = villianAttributes.health;
+}
+//inherit
+Villian.prototype = Object.create(Humanoid.prototype); 
+
+//methods 
+Villian.prototype.boomingVoice = function () {
+  this.health -= 10;
+  return `The villian ${this.name} lets out a booming voice that states you will die because I am ${this.name}`;
+}
+
+function Hero (heroAttributes){
+  this.goodLooks = heroAttributes.goodlooks;
+  this.health = heroAttributes.health;
+  
+  Humanoid.call(this, heroAttributes);
+}
+
+Hero.prototype = Object.create(Humanoid.prototype);  
+
+Hero.prototype.superSmart = function () {
+  this.health -=20;
+  console.log(this.health); 
+  return `The hero ${this.name} is witty and super smart`; 
+}
+Hero.prototype.stealth = function () {
+  this.health -=50; 
+  return `The hero ${this.name} is very stealthy`
+}
+Hero.prototype.windTunnel = function() {
+  this.health-= 30; 
+  return `The hero creates a wind tunnel using his weapons ${this.weapons} sending ${willard.name} to the underworld... and thereby defeats the villian`; 
+}
+
+
+const rick = new Hero({
   createdAt: new Date(),
   dimensions: {
-    length: 2,
+    length: 1,
     width: 2,
-    height: 9,
-  },
-  hp: 15,
-  name: 'Aunt Hilda',
-  faction: 'New York',
-  weapons: [
-    'Nose Twitch', 'Wand of her Mother', 'influences Sabrina', 'supporter of Sabrina', 'Tries to do what is best for herself rather than for Sabrina', 'tries encourage Sabrina from using magic', 'ultimately loves Sabrina' 
-  ],
-  language: 'English',
-  Hero: 'High',
-  currentHealth: 100
-});
-const womanVillian = new Villian({
-  createdAt: new Date(),
-  dimensions: {
-    length: 2,
-    width: 2,
-    height: 9,
+    height: 4,
   },
   hp: 10,
-  name: 'Morgan',
-  faction: 'Land of Magic',
+  name: 'Sir Rick',
+  faction: 'Forest Kingdom',
   weapons: [
-    'overly confident','too egotistical'
+    'Strength', ' Intense Training', ' Kindness', ' Bright Blue Piercing Eyes', ' Sword of the Elves', ' Shield of Light'
   ],
-  language: 'English',
-  uglyStare: 'Ugly Twisted',
-  currentHealth: 100,
+  language: 'Elvish and Common Tongue',
+  goodLooks: 'High',
+  health: 100
 });
+
+willard = new Villian({
+  createdAt: new Date(),
+  dimensions: {
+    length: 1,
+    width: 2,
+    height: 4,
+  },
+  hp: 10,
+  name: 'Willard',
+  faction: 'Forest Kingdom',
+  weapons: [
+    'Severe Halitosis',' Staff of Darkness', ' Magic from the Underworld'
+  ],
+  language: 'Jibberish',
+  uglyStare: 'Wicked Grin',
+  health: 100
+});
+
 console.log("A new battle is about to begin")
-console.log(`The match ${witch.name} vs ${womanVillian.name} has begun.`);
-console.log(`The villian has the following weapons ${womanVillian.weapons}`);
-console.log(`The hero has the following weapons ${witch.weapons}`); 
-console.log(`The villian has the following extra attribute ${womanVillian.uglyStare} look`);  
-console.log(`The villian speaks the following language ${womanVillian.language}`);
-console.log(`The hero speaks the following language ${witch.language}`);
-console.log(womanVillian.evilKackle());
-console.log(`${witch.name} has been reduced, ${witch.name} now has ${womanVillian.Health}`);
-console.log(auntHilda.studyMagic());
-console.log(`${womanVillian.name} has been reduced, ${womanVillian.name} now has ${womanVillian.Health}`);
-console.log(auntHilda.reassuresNeice());
-console.log(`${womanVillian.name} has been reduced, ${womanVillian.name} now has ${womanVillian.Health}`) ;
-console.log(auntHilda.flawlessVictory()); 
-console.log(`${womanVillian.name} has been reduced, ${womanVillian.name} now has ${womanVillian.Health}`);
-console.log(`${auntHilda.name} WINS THE FIGHT AND SAVES ${witch.name} AND HER BOYFRIEND SO THEY CAN GO TO SCHOOL TOMORROW!`); 
+console.log(`The match ${rick.name} vs ${willard.name} has begun.`);
+console.log(`The villian has the following weapons ${willard.weapons}`);
+console.log(`The hero has the following weapons ${rick.weapons}`); 
+console.log(`The villian has the following extra attribute ${willard.uglyStare} look`); 
+console.log(`The villian speaks the following language ${willard.language}`);
+console.log(`The hero speaks the following language ${rick.language}`);
+console.log(willard.boomingVoice());
+console.log(`${rick.name} has been reduced, ${rick.name} now has ${willard.health}`);
+console.log(rick.superSmart());
+console.log(`${willard.name} has been reduced, ${willard.name} now has ${willard.health}`);
+console.log(rick.stealth());
+console.log(`${willard.name} has been reduced, ${willard.name} now has ${rick.health}`) ;
+console.log(rick.windTunnel()); 
+console.log(`${willard.name} has been reduced, ${willard.name} now has ${rick.health}`);
+console.log(`${rick.name} WINS GETS THE PRETTY LADY!`); 
