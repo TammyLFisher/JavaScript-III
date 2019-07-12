@@ -10,11 +10,7 @@
 */
 
 // Principle 1
-function sayName(name) {
-    console.log(this);
-    return name;
-}
-sayName('Tammy Fisher')
+
 
 // code example for Window Binding
 

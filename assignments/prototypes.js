@@ -144,8 +144,6 @@ console.log(archer.greet()); // Lilith offers a greeting in Elvish.
 console.log(mage.takeDamage()); // Bruce took damage.
 console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
 
-
-
 // Stretch task: 
 // * Create Villian and Hero constructor functions that inherit from the Humanoid constructor function.  
 // * Give the Hero and Villians different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
@@ -161,34 +159,50 @@ function Villian(villianAttributes){
 Villian.prototype = Object.create(Humanoid.prototype); 
 
 //methods 
-Villian.prototype.boomingVoice = function () {
-  this.health -= 10;
+Villian.prototype.boomingVoice = function (target) {
+  target.health = (target.health - 10);
   return `The villian ${this.name} lets out a booming voice that states you will die because I am ${this.name}`;
 }
 
 function Hero (heroAttributes){
+  Humanoid.call(this, heroAttributes);
   this.goodLooks = heroAttributes.goodlooks;
   this.health = heroAttributes.health;
   
-  Humanoid.call(this, heroAttributes);
 }
 
 Hero.prototype = Object.create(Humanoid.prototype);  
 
-Hero.prototype.superSmart = function () {
-  this.health -=20;
+//Jacob Example
+// HeroVillan.prototype.fight1 = function (target) {
+//   if (target.healthPoints <= 0){
+//   console.log(target.name + ' is looking hurt. Finish Him!')
+//   return `${this.name} finishes ` + target.name + ` with ${this.finish}!!!`
+//   }
+//   else {
+//   target.healthPoints = (target.healthPoints - 10)
+//   return `${this.name} lashes out with the ${this.ability} ability.`;
+//   }
+// };
+
+
+Hero.prototype.superSmart = function (target) {
+  target.health = (target.health - 20);
   console.log(this.health); 
   return `The hero ${this.name} is witty and super smart`; 
 }
-Hero.prototype.stealth = function () {
-  this.health -=50; 
+
+Hero.prototype.stealth = function (target) {
+  target.health = (target.health - 50);
+  console.log(this.health) 
   return `The hero ${this.name} is very stealthy`
 }
-Hero.prototype.windTunnel = function() {
-  this.health-= 30; 
-  return `The hero creates a wind tunnel using his weapons ${this.weapons} sending ${willard.name} to the underworld... and thereby defeats the villian`; 
-}
 
+Hero.prototype.windTunnel = function(target) {
+  target.health = (target.health - 50);
+  console.log(this.health) 
+  return `The hero creates a wind tunnel using his weapons ${this.weapons[0]} sending ${willard.name} to the underworld... and thereby defeats the villian`; 
+}
 
 const rick = new Hero({
   createdAt: new Date(),
@@ -208,7 +222,7 @@ const rick = new Hero({
   health: 100
 });
 
-willard = new Villian({
+const willard = new Villian({
   createdAt: new Date(),
   dimensions: {
     length: 1,
@@ -233,12 +247,16 @@ console.log(`The hero has the following weapons ${rick.weapons}`);
 console.log(`The villian has the following extra attribute ${willard.uglyStare} look`); 
 console.log(`The villian speaks the following language ${willard.language}`);
 console.log(`The hero speaks the following language ${rick.language}`);
-console.log(willard.boomingVoice());
-console.log(`${rick.name} has been reduced, ${rick.name} now has ${willard.health}`);
-console.log(rick.superSmart());
+console.log(willard.boomingVoice(rick));
+console.log(`${rick.name} has been reduced, ${rick.name} now has ${rick.health}`);
+console.log(willard.health)
+console.log(rick.superSmart(willard));
+console.log(willard.health)
 console.log(`${willard.name} has been reduced, ${willard.name} now has ${willard.health}`);
-console.log(rick.stealth());
-console.log(`${willard.name} has been reduced, ${willard.name} now has ${rick.health}`) ;
-console.log(rick.windTunnel()); 
-console.log(`${willard.name} has been reduced, ${willard.name} now has ${rick.health}`);
+console.log(rick.stealth(willard));
+console.log(`${willard.name} has been reduced, ${willard.name} now has ${willard.health}`) ;
+console.log(rick.windTunnel(willard)); 
+console.log(`${willard.name} has been reduced, ${willard.name} now has ${willard.health}`);
 console.log(`${rick.name} WINS GETS THE PRETTY LADY!`); 
+console.log(willard.health)
+console.log(rick.health)
