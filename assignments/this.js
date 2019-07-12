@@ -10,7 +10,18 @@
 */
 
 // Principle 1
+var name = {
+    firstName: "Barbara",
+    lastName: "Meadors",
 
+    sayName: function(){
+        console.log(this.firstName + " " + this.lastName + ` is my best friend.`);
+    }
+}
+ name.sayName();
+
+ var myBestFriendsName =  name.sayName.bind(name);
+ myBestFriendsName();
 
 // code example for Window Binding
 
@@ -42,9 +53,6 @@ const chris = new CordialPerson ('Tammy');
 tammmy.speak()
 chris.speak()
 
-// code example for New Binding
-
-// Principle 4
 function Person(attributes) {
     this.age = attributes.age;
     this.name = attributes.name;
@@ -59,6 +67,20 @@ function Person(attributes) {
      homeTown: "Bedrock"
  });
  console.log(fred); console.log(fred.speak());
+// code example for New Binding
+
+// Principle 4
+
+var dog = { 
+    dogName: "Leonidas",
+    nickName: "Sir Fat Fat"
+}
+
+function sayDogName(momName) {
+    console.log(`${momName}, the name of my dog is ${this.nickName} ${this.dogName} the III.`);
+}
+sayDogName.apply(dog, ["Mom"]);
+sayDogName.call(dog, "Mom");
 
 
 // code example for Explicit Binding
